@@ -1,0 +1,7 @@
+template_dir: D:\Matt\Games\Star Wars TCG\Hi-Res Cards\Templates\test
+image_dir: D:\Matt\Games\Star Wars TCG\IDC\Old Expansion Files\Battlefront
+
+fonts:
+  Dax:
+    Regular: C:/Users/Matt/AppData/Local/Microsoft/Windows/Fonts/fontsbin.com_dax-regular-opentype.otf
+    Italic: C:/Users/Matt/AppData/Local/Microsoft/Windows/Fonts/Dax Italic.otf
