@@ -263,15 +263,11 @@ class SWTCGCard:
         for card_image in layer_dict2["Card Image"].layers:
             layer_num += 1
             app.activeDocument = doc2
-            #bounds = layer_dict2[card_image.name].bounds
             layer_dict2[card_image.name].duplicate(layer_dict["Card Image"], ps.ElementPlacement.PlaceAtEnd)
             layer_dict = ps_util.get_layers(document)
             # Resize image to 99.2% of its original size to compensate for difference in card sizes.
             resize_pct = 99.2
             app.activeDocument = document
             layer_dict[card_image.name].resize(resize_pct, resize_pct, ps.AnchorPosition.TopLeft)
-            #x = min(max(bounds[0], 0), document.width)
-            #y = min(max(bounds[1], 0), document.height)
-            #ps_util.move_layer_to(layer_dict["Layer {}".format(layer_num)], x, y)
         layer_dict["Gamma Correction"].visible = True
         return None
