@@ -141,7 +141,8 @@ class SWTCGCard:
             ]
 
         if self.version is None:
-            layer_dict["Unique"].visible = False  # Hide Unique layer set
+            if "Unique" in layer_dict.keys():
+                layer_dict["Unique"].visible = False  # Hide Unique layer set
         else:
             layer_dict["Unique"].visible = True
             layer_dict["Version Letter"].textItem.contents = self.version

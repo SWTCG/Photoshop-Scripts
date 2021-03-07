@@ -1,9 +1,9 @@
 import os
 
 import photoshop.api as ps
-import generate_cards.util.photoshop
 from numpy import array
 
+import generate_cards.util.photoshop
 from generate_cards.expansions import EXPANSIONS
 from generate_cards.SWTCGCard import SWTCGCard
 
