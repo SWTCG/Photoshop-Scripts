@@ -10,8 +10,8 @@ from generate_cards.SWTCGCard import SWTCGCard
 
 class Unit(SWTCGCard):
     def __init__(self, name, typeline, expansion, side, rarity, cost, speed, power, health, number, image,
-                 game_text=None, flavor_text=None, version=None, ppi=600):
-        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, ppi)
+                 game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
+        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
         self.cost = cost
         self.speed = speed
         self.power = power

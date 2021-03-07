@@ -25,13 +25,14 @@ class SWTCGCard:
     # Could go as small as 6 pt to get 10 lines on a unit card. Darth Sidious (G) is precedent.
 
     def __init__(self, name, typeline, expansion, side, rarity, image,
-                 game_text=None, flavor_text=None, version=None, ppi=600):
+                 game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
         self.name = name
         self.typeline = typeline
         self.expansion = expansion
         self.side = side
         self.rarity = rarity
         self.image = image
+        self.icon = icon
         self.ppi = ppi
 
         self.game_text = CardText(game_text, SWTCGCard.DAX_REG, SWTCGCard.DEFAULT_FONT_SIZE)
@@ -189,6 +190,28 @@ class SWTCGCard:
         # Place image.
         if self.image is not None:
             self.place_image(document, layer_dict)
+
+        # Set IDC/Promo icon
+        for icon_layer in layer_dict["IDC/Promo Icons"].layers:
+            layer_dict[icon_layer.name].visible = False
+        if self.icon is True:
+            if EXPANSIONS[self.expansion].year >= 2010:
+                if self.rarity == "P":
+                    layer_dict["IDC Promo Icon (Revised)"].visible = True
+                else:
+                    layer_dict["IDC Icon (Revised)"].visible = True
+            elif 2006 <= EXPANSIONS[self.expansion].year < 2010:
+                if self.rarity == "P":
+                    layer_dict["IDC Promo Icon (Original)"].visible = True
+                else:
+                    layer_dict["IDC Icon (Original)"].visbile = True
+            else:
+                if self.rarity == "P":
+                    layer_dict["Promo Icon"].visible = True
+        elif self.icon:
+            layer_dict[self.icon].visible = True
+        else:
+            pass
 
         # Text should probably be cleaned for proper bullet point characters, é characters, en dashes in front of
         # numbers, etc. before getting to this function.
