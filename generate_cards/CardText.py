@@ -8,7 +8,8 @@ class CardText:
     FORMATTERS = ["<i>", "</i>"]
 
     def __init__(self, text, font, font_size, **kwargs):
-        text = text.replace(" | ", "\r")
+        if text is not None:
+            text = text.replace(" | ", "\r")
         self.text = text
         self.font = font
         self.font_size = font_size
