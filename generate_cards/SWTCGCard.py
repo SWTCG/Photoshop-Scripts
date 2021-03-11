@@ -113,7 +113,7 @@ class SWTCGCard:
         layer_dict["Card Name"].textItem.contents = self.name
         layer_dict["Typeline"].textItem.contents = self.typeline
 
-        if self.game_text is None:
+        if self.game_text.text is None or self.game_text.text == "":
             layer_dict["Game Text"].visible = False  # Hide Game Text layer
             flavor_shift = 0
         else:
@@ -126,7 +126,7 @@ class SWTCGCard:
             line_gap = layer_dict["Game Text"].textItem.position[1] - layer_dict["Game Text"].bounds[1]
             flavor_shift = len(self.game_text.lines) * self.game_text.font_size * 10 * self.ppi / 600 + line_gap
 
-        if self.flavor_text is None:
+        if self.flavor_text.text is None or self.flavor_text.text == "":
             layer_dict["Flavour Text"].visible = False  # Hide Flavour Text layer
         else:
             # Set flavor text and font size
