@@ -45,13 +45,29 @@ class CardText:
     def line_height(self, ppi):
         return self.font_size * 10 * ppi / 600
 
-    def position_symbol(self, symbol, ppi):
+    def position_symbol(self, symbol, ppi, align='left'):
+        if align == 1:
+            align = 'left'
+        elif align == 2:
+            align = 'center'
+        elif align == 3:
+            align = 'right'
+
         shifts = []
         line_count = 0
         for line in self.lines:
+            line_len = self.text_width(line, ppi)
             substrings = line.split(symbol.string)
             for i in range(len(substrings) - 1):
                 x_shift = self.text_width(symbol.string.join(substrings[0:i + 1]), ppi)
+                if align.lower() == 'left':
+                    pass
+                elif align.lower() == 'center':
+                    x_shift -= line_len / 2
+                elif align.lower() == 'right':
+                    x_shift -= line_len
+                else:
+                    raise Exception("Invalid value for `align`: {}".format(align))
                 y_shift = line_count * self.line_height(ppi) - (symbol.height + symbol.baseline_shift)
                 shifts.append((x_shift, y_shift))
             line_count += 1

@@ -247,7 +247,8 @@ class SWTCGCard:
                 else:
                     layer_name = symbol.layer_name
                 init_pos = layers["Game Text"].textItem.position
-                xy_pos, text_pos = self.game_text.position_symbol(symbol, self.ppi)
+                text_alignment = layers["Game Text"].textItem.justification
+                xy_pos, text_pos = self.game_text.position_symbol(symbol, self.ppi, align=text_alignment)
                 ps_util.move_layer_to(layers[layer_name], init_pos[0] + xy_pos[i][0], init_pos[1] + xy_pos[i][1])
 
                 space_width = self.game_text.text_width(" ", self.ppi, scale=1)
