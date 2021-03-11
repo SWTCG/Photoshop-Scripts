@@ -205,7 +205,7 @@ class SWTCGCard:
                 if self.rarity == "P":
                     layer_dict["IDC Promo Icon (Original)"].visible = True
                 else:
-                    layer_dict["IDC Icon (Original)"].visbile = True
+                    layer_dict["IDC Icon (Original)"].visible = True
             else:
                 if self.rarity == "P":
                     layer_dict["Promo Icon"].visible = True
