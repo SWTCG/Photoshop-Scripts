@@ -69,3 +69,20 @@ class TestUnit(unittest.TestCase):
         )
         rebel_soldier.wrap_text()
         rebel_soldier.write_psd()
+
+    def test_three_lines(self):
+        tri_fighter_squadron = Subordinate(
+            name="Tri-Fighter Squadron",
+            typeline="Subordinate - Space/Character - Separatist Trade Federation Droid Squadron",
+            expansion="BF",
+            side="D",
+            rarity="S",
+            image=None,
+            speed="60",
+            power="4",
+            health="2",
+            game_text="Whenever this unit is attacked, take 1 60/1/1 Elite Buzz Droid Subordinate with \"Foresight: "
+                      "Do 1 damage to the defending unit\" and put it into the Space arena."
+        )
+        tri_fighter_squadron.wrap_text()
+        tri_fighter_squadron.write_psd()

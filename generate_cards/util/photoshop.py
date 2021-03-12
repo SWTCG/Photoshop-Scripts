@@ -318,6 +318,19 @@ def move_layer_to(layer, x, y):
     return None
 
 
+def move_text_to(text_layer, x, y):
+    """
+    Similar to method `move_layer_to` but instead of positioning the layer based on its bounds,
+    this method positions it based on the position of the text baseline.
+    """
+    position = text_layer.textItem.position
+    position[0] = x - position[0]
+    position[1] = y - position[1]
+
+    text_layer.translate(position[0], position[1])
+    return None
+
+
 def set_text(layer, text):
     """
     Set the text content of a layer without changing any of the formatting.
