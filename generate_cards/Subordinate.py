@@ -27,7 +27,7 @@ class Subordinate(SWTCGCard):
             TextSpaceLimit(6.5, 0.89, array([1270, 1220, 1150]) * self.ppi / 600)
         ]
         text_limits += [TextSpaceLimit(6.5, scale / 100, array([1270, 1220, 1150]) * self.ppi / 600)
-                        for scale in range(88, 84, -1)]
+                        for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None
 
