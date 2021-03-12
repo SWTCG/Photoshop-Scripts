@@ -52,3 +52,21 @@ class TestNonUnit(unittest.TestCase):
         )
         endor_battlefront.wrap_text()
         endor_battlefront.write_psd()
+
+    def test_scaling(self):
+        trained_in_the_arts = NonUnit(
+            name="Trained in the Arts",
+            typeline="Battle",
+            expansion="SAV",
+            side="N",
+            rarity="C",
+            image=None,
+            number="109",
+            game_text="Pay 1 Force -> Choose one of your units in any arena. That unit gets Parry 1 until end of turn. "
+                      "<i>(When that unit is attacked, prevent 1 damage if the attacking unit rolls at least one "
+                      "natural 1.)</i>\rEnhance: Pay 3 more Force -> Each of your units in that arena gets Parry 1 "
+                      "until end of turn instead.",
+            flavor_text="\"You fool! I've been trained in your Jedi arts by Count Dooku.\" \u2014General Grievous"
+        )
+        trained_in_the_arts.wrap_text()
+        trained_in_the_arts.write_psd()

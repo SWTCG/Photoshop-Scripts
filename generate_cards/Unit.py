@@ -24,6 +24,9 @@ class Unit(SWTCGCard):
             TextSpaceLimit(7, 0.89, array([1025, 1050, 1075, 1088, 1088, 1075, 1050, 1025]) * self.ppi / 600),
             TextSpaceLimit(6.5, 0.89, array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040]) * self.ppi / 600)
         ]
+        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040])
+                                       * self.ppi / 600)
+                        for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None
 

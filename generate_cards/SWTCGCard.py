@@ -125,7 +125,7 @@ class SWTCGCard:
             layer_dict["Game Text"].visible = True
             layer_dict["Game Text"].textItem.contents = self.game_text.psd_text()
             layer_dict["Game Text"].textItem.size = self.game_text.font_size
-            layer_dict["Game Text"].textItem.horizontalScale = 89
+            layer_dict["Game Text"].textItem.horizontalScale = self.game_text.scale * 100
 
             line_gap = layer_dict["Game Text"].textItem.position[1] - layer_dict["Game Text"].bounds[1]
             flavor_shift = len(self.game_text.lines) * self.game_text.font_size * 10 * self.ppi / 600 + line_gap
@@ -137,7 +137,7 @@ class SWTCGCard:
             layer_dict["Flavour Text"].visible = True
             layer_dict["Flavour Text"].textItem.contents = self.flavor_text.psd_text()
             layer_dict["Flavour Text"].textItem.size = self.flavor_text.font_size
-            layer_dict["Flavour Text"].textItem.horizontalScale = 89
+            layer_dict["Flavour Text"].textItem.horizontalScale = self.flavor_text.scale * 100
             # Position flavor text
             layer_dict["Flavour Text"].textItem.position = [
                 layer_dict["Game Text"].textItem.position[0],

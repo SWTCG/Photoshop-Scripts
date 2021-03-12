@@ -7,12 +7,13 @@ import generate_cards.symbols as symbols
 class CardText:
     FORMATTERS = ["<i>", "</i>"]
 
-    def __init__(self, text, font, font_size, **kwargs):
+    def __init__(self, text, font, font_size, scale=0.89, **kwargs):
         if text is not None:
             text = text.replace(" | ", "\r")
         self.text = text
         self.font = font
         self.font_size = font_size
+        self.scale = scale
         self.__dict__.update(kwargs)
 
         self.lines = text.split("\r") if text is not None else []
@@ -56,10 +57,10 @@ class CardText:
         shifts = []
         line_count = 0
         for line in self.lines:
-            line_len = self.text_width(line, ppi)
+            line_len = self.text_width(line, ppi, self.scale)
             substrings = line.split(symbol.string)
             for i in range(len(substrings) - 1):
-                x_shift = self.text_width(symbol.string.join(substrings[0:i + 1]), ppi)
+                x_shift = self.text_width(symbol.string.join(substrings[0:i + 1]), ppi, self.scale)
                 if align.lower() == 'left':
                     pass
                 elif align.lower() == 'center':
@@ -120,7 +121,7 @@ class CardText:
                 line_length = inf
             else:
                 line_length = line_lengths[len(new_lines)]
-            while self.text_width(line, ppi) > line_length:
+            while self.text_width(line, ppi, self.scale) > line_length:
                 words_removed += 1
                 line = " ".join(words[:-words_removed])
             new_lines.append(line)
