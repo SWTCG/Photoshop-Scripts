@@ -106,9 +106,10 @@ class CardText:
             # should be treated as one word. For example, the quote "I am your father." —Darth Vader
             # shouldn't be split onto separate lines between 'Darth' and 'Vader'. It should be split
             # before '—Darth Vader'.
-            quote = line.rsplit(" —", 1)
+            # \u2014 is unicode for the em-dash (—)
+            quote = line.rsplit(" \u2014", 1)
             if len(quote) == 2:
-                speaker = "—" + quote[1]
+                speaker = "\u2014" + quote[1]
                 words = quote[0].split(" ")
                 words.append(speaker)
             else:
