@@ -57,7 +57,7 @@ class TestUnit(unittest.TestCase):
     def test_two_abilities(self):
         rebel_soldier = Subordinate(
             name="Rebel Soldier",
-            typeline="Subordinate - Character - Rebel Soldier",
+            typeline="Subordinate - Ground/Character - Rebel Soldier",
             expansion="BF",
             side="L",
             rarity="S",
