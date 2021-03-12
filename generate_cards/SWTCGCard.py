@@ -1,4 +1,5 @@
 import os
+import warnings
 
 import photoshop.api as ps
 import yaml
@@ -79,33 +80,36 @@ class SWTCGCard:
 
         return template + " Template.psd"
 
-    def _wrap_text(self, line_lengths):
-        new_game_lines = self.game_text.wrap_text(self.ppi, line_lengths[7])[1]
-        new_flavor_lines = self.flavor_text.wrap_text(self.ppi, line_lengths[7][len(new_game_lines) + 1:])[1]
+    def _wrap_text(self, text_limits):
+        for index, limit in enumerate(text_limits):
+            self.game_text.font_size = limit.font_size
+            self.game_text.scale = limit.horizontal_scale
+            self.flavor_text.font_size = limit.font_size
+            self.flavor_text.scale = limit.horizontal_scale
+            line_lengths = limit.line_length_limits
 
-        line_count = len(new_game_lines) + len(new_flavor_lines)
-        if len(new_flavor_lines) > 0:
-            line_count += 1
+            new_game_lines = self.game_text.wrap_text(self.ppi, line_lengths)[1]
+            new_flavor_lines = self.flavor_text.wrap_text(self.ppi, line_lengths[len(new_game_lines) + 1:])[1]
 
-        if line_count > len(line_lengths[7]):
-            self.game_text.font_size = 6.5
-            self.flavor_text.font_size = 6.5
-            self.game_text.wrap_text(self.ppi, line_lengths[6.5], inplace=True)
-            self.flavor_text.wrap_text(self.ppi, line_lengths[6.5][len(self.game_text.lines) + 1:], inplace=True)
-        else:
-            self.game_text.text = "\r".join(new_game_lines)
-            self.flavor_text.text = "\r".join(new_flavor_lines)
-            self.game_text.lines = new_game_lines
-            self.flavor_text.lines = new_flavor_lines
+            line_count = len(new_game_lines) + len(new_flavor_lines)
+            if len(new_flavor_lines) > 0:
+                line_count += 1
 
-        # Issue warning if maximum line count is exceeded even after resizing font to 6.5 pt
-        line_count = len(self.game_text.lines) + len(self.flavor_text.lines)
-        if len(self.flavor_text.lines) > 0:
-            line_count += 1
-        if line_count > len(line_lengths[6.5]):
-            raise Warning("{} exceeds maximum line count".format(self.name))
-
-        return None
+            if line_count <= limit.line_count:
+                self.game_text.text = "\r".join(new_game_lines)
+                self.flavor_text.text = "\r".join(new_flavor_lines)
+                self.game_text.lines = new_game_lines
+                self.flavor_text.lines = new_flavor_lines
+                return 0
+            elif index == len(text_limits) - 1:
+                # Issue warning if maximum line count is exceeded even after checking all text formatting
+                # options.
+                self.game_text.text = "\r".join(new_game_lines)
+                self.flavor_text.text = "\r".join(new_flavor_lines)
+                self.game_text.lines = new_game_lines
+                self.flavor_text.lines = new_flavor_lines
+                warnings.warn(f"{self.name} exceeds maximum line count")
+                return 1
 
     def _write_psd(self, document):
         layer_dict = ps_util.get_layers(document)

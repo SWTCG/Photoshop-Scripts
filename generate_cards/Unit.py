@@ -5,6 +5,7 @@ from numpy import array
 
 import generate_cards.util.photoshop
 from generate_cards.expansions import EXPANSIONS
+from generate_cards.TextSpaceLimit import TextSpaceLimit
 from generate_cards.SWTCGCard import SWTCGCard
 
 
@@ -19,11 +20,11 @@ class Unit(SWTCGCard):
         self.number = number
 
     def wrap_text(self):
-        line_lengths = {
-            7: array([1025, 1050, 1075, 1088, 1088, 1075, 1050, 1025]) * self.ppi / 600,
-            6.5: array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040]) * self.ppi / 600
-        }
-        self._wrap_text(line_lengths)
+        text_limits = [
+            TextSpaceLimit(7, 0.89, array([1025, 1050, 1075, 1088, 1088, 1075, 1050, 1025]) * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040]) * self.ppi / 600)
+        ]
+        self._wrap_text(text_limits)
         return None
 
     def write_psd(self, auto_close=False, auto_quit=False):
