@@ -10,15 +10,18 @@ from generate_cards.SWTCGCard import SWTCGCard
 class Subordinate(SWTCGCard):
     def __init__(self, name, typeline, expansion, side, rarity, speed, power, health, image,
                  game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
-        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
+        if flavor_text is not None:
+            flavor_text = flavor_text.replace("<i>", "%temp%").replace("</i>", "<i>").replace("%temp%", "</i>")
+            game_text = f"{game_text}\r<i>{flavor_text}</i>"
+        super().__init__(name, typeline, expansion, side, rarity, image, game_text, None, version, icon, ppi)
         self.speed = speed
         self.power = power
         self.health = health
 
     def wrap_text(self):
         line_lengths = {
-            7: array([1265, 1200, 1165]) * self.ppi / 600,
-            6.5: array([1265, 1200, 1165]) * self.ppi / 600
+            7: array([1200, 1155]) * self.ppi / 600,
+            6.5: array([1200, 1155]) * self.ppi / 600
         }
         self._wrap_text(line_lengths)
         return None
