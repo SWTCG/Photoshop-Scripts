@@ -41,10 +41,8 @@ class Subordinate(SWTCGCard):
 
         if len(self.game_text.lines) > 2:
             y = 1813 * self.ppi / 600 - layer_dict["Game Text"].textItem.position[1]
-            #generate_cards.util.photoshop.move_text_to(layer_dict["Game Text"], 745, 1813)
         else:
             y = 1868 * self.ppi / 600 - layer_dict["Game Text"].textItem.position[1]
-            #layer_dict["Game Text"].translate(0, -55 * self.ppi / 600)
         layer_dict["Game Text"].translate(0, y)
 
         layer_dict["Speed"].textItem.contents = self.speed

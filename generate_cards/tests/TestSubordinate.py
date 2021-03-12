@@ -73,7 +73,7 @@ class TestUnit(unittest.TestCase):
     def test_three_lines(self):
         tri_fighter_squadron = Subordinate(
             name="Tri-Fighter Squadron",
-            typeline="Subordinate - Space/Character - Separatist Trade Federation Droid Squadron",
+            typeline="Subordinate - Space - Separatist Trade Federation Droid Squadron",
             expansion="BF",
             side="D",
             rarity="S",
