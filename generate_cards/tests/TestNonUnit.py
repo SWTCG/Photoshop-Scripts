@@ -53,11 +53,44 @@ class TestNonUnit(unittest.TestCase):
         endor_battlefront.wrap_text()
         endor_battlefront.write_psd()
 
+    def test_event(self):
+        battlefront = NonUnit(
+            name="Battlefront",
+            typeline="Event",
+            expansion="BF",
+            side="N",
+            rarity="R",
+            image="BF001_Battlefront.psd",
+            number="1",
+            game_text="Each player can have 1 Location in each arena at the same time.\rWhenever a player completes "
+                      "a Location, don't discard another player's Location <i>(if any)</i> in the same arena.\r"
+                      "As long as a player controls an arena, his or her opponent's Location in that arena loses its "
+                      "game text."
+        )
+        battlefront.wrap_text()
+        battlefront.write_psd()
+
+    def test_trap(self):
+        sabotage = NonUnit(
+            name="Sabotage",
+            typeline="Mission - Trap",
+            expansion="BF",
+            side="N",
+            rarity="U",
+            image="BF049_Sabotage.psd",
+            number="49",
+            cost="X",
+            game_text="When you deploy or put a Spy or a unit with Stealth into any arena, remove X counters from a "
+                      "partially built card in your opponent's build zone.\rPay X+2 Force -> Meditate"
+        )
+        sabotage.wrap_text()
+        sabotage.write_psd()
+
     def test_scaling(self):
         trained_in_the_arts = NonUnit(
             name="Trained in the Arts",
             typeline="Battle",
-            expansion="SAV",
+            expansion="FOTR",
             side="N",
             rarity="C",
             image=None,
