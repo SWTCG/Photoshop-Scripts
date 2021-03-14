@@ -53,6 +53,22 @@ class TestNonUnit(unittest.TestCase):
         endor_battlefront.wrap_text()
         endor_battlefront.write_psd()
 
+    def test_location_multi(self):
+        bespin_battlefront = NonUnit(
+            name="Bespin Battlefront",
+            typeline="Location - Space/Ground/Character - Bespin Battlefield",
+            expansion="BF",
+            side="N",
+            rarity="R",
+            image="BF032_Bespin_Battlefront.psd",
+            number="32",
+            cost="2",
+            game_text="Each Bespin unit, Bounty Hunter, and Smuggler costs 1 less build counter to deploy to this "
+                      "arena.\rEach Bespin unit, Bounty Hunter, and Smuggler in this arena gets \"[tap] -> Ambush 4.\""
+        )
+        bespin_battlefront.wrap_text()
+        bespin_battlefront.write_psd()
+
     def test_equipment(self):
         pulse_cannon = NonUnit(
             name="Pulse Cannon",
