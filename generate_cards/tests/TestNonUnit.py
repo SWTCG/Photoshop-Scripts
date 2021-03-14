@@ -53,6 +53,59 @@ class TestNonUnit(unittest.TestCase):
         endor_battlefront.wrap_text()
         endor_battlefront.write_psd()
 
+    def test_equipment(self):
+        pulse_cannon = NonUnit(
+            name="Pulse Cannon",
+            typeline="Equipment - Ground/Character - Blaster Weapon",
+            expansion="BF",
+            side="N",
+            rarity="U",
+            image="BF047_Pulse_Cannon.psd",
+            number="47",
+            cost="3",
+            game_text="Pay 1 build point -> Equip\rEquipped Character or Squad gets +1 power, Critical Hit 2, Overkill "
+                      "and \"Whenever this unit attacks, the defending unit loses Armor for that attack.\"",
+            flavor_text="\"Think that armor's gonna help?\" \u2014Rebel soldier"
+        )
+        pulse_cannon.wrap_text()
+        pulse_cannon.write_psd()
+
+    def test_equipment_unique(self):
+        boba_fett_s_jetpack_a = NonUnit(
+            name="Boba Fett's Jetpack",
+            typeline="Equipment - Character",
+            expansion="SAV",
+            side="N",
+            rarity="R",
+            image=None,
+            number="2",
+            cost="2",
+            game_text="Pay 1 build point -> Equip\rEquipped Character unit gets +20 speed.\rEquipped Boba Fett also "
+                      "gets \"Pay 0 Force -> Evade 1.",
+            flavor_text="Boba Fett's Mitrinomon Z-6 jetpack has saved the bouty hunter's life on numerous occasions.",
+            version="A"
+        )
+        boba_fett_s_jetpack_a.wrap_text()
+        boba_fett_s_jetpack_a.write_psd()
+
+    def test_resource(self):
+        imperial_production_line = NonUnit(
+            name="Imperial Production Line",
+            typeline="Resource",
+            expansion="BF",
+            side="D",
+            rarity="U",
+            image="BF042_Imperial_Production_Line.psd",
+            number="42",
+            cost="5",
+            game_text="Add 2 counters -> Gain 1 build point and draw a card. Play only if you have a Location in any "
+                      "arena and only during your build step.\rRemove 6 counters -> Reveal up to 3 partially built "
+                      "Imperial unit cards in your build zone to your opponent and put up to 3 total build counters "
+                      "divided as you choose on them. Play only during your build step."
+        )
+        imperial_production_line.wrap_text()
+        imperial_production_line.write_psd()
+
     def test_event(self):
         battlefront = NonUnit(
             name="Battlefront",
