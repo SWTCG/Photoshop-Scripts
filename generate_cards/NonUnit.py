@@ -19,10 +19,10 @@ class NonUnit(SWTCGCard):
 
     def wrap_text(self):
         text_limits = [
-            TextSpaceLimit(7, 0.89, array([1650, 1675, 1685, 1675, 1650]) * self.ppi / 600),
-            TextSpaceLimit(6.5, 0.89, array([1650, 1680, 1690, 1680, 1660]) * self.ppi / 600)
+            TextSpaceLimit(7, 0.89, array([1661, 1675, 1685, 1675, 1650]) * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, array([1661, 1680, 1690, 1680, 1660]) * self.ppi / 600)
         ]
-        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1650, 1680, 1690, 1680, 1660]) * self.ppi / 600)
+        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1661, 1680, 1690, 1680, 1660]) * self.ppi / 600)
                         for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None
