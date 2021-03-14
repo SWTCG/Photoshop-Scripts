@@ -88,6 +88,23 @@ class TestNonUnit(unittest.TestCase):
         boba_fett_s_jetpack_a.wrap_text()
         boba_fett_s_jetpack_a.write_psd()
 
+    def test_skill(self):
+        sharpshooter_training = NonUnit(
+            name="Sharpshooter Training",
+            typeline="Equipment - Ground/Character - Skill",
+            expansion="BF",
+            side="N",
+            rarity="R",
+            image="BF028_Sharpshooter_Training.psd",
+            number="28",
+            cost="3",
+            game_text="Remove 1 counter from your Resource -> Equip\rEquipped Character or Squad gets Accuracy 1 and "
+                      "Precision.\rEquipped unique Character or Squad also gets \"This unit can attack Ground units "
+                      "and Characters in your opponent's build zone.\""
+        )
+        sharpshooter_training.wrap_text()
+        sharpshooter_training.write_psd()
+
     def test_resource(self):
         imperial_production_line = NonUnit(
             name="Imperial Production Line",
