@@ -81,7 +81,7 @@ class TestNonUnit(unittest.TestCase):
             number="2",
             cost="2",
             game_text="Pay 1 build point -> Equip\rEquipped Character unit gets +20 speed.\rEquipped Boba Fett also "
-                      "gets \"Pay 0 Force -> Evade 1.",
+                      "gets \"Pay 0 Force -> Evade 1.\"",
             flavor_text="Boba Fett's Mitrinomon Z-6 jetpack has saved the bouty hunter's life on numerous occasions.",
             version="A"
         )

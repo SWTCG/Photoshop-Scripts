@@ -45,8 +45,7 @@ class SWTCGCard:
         self.template = self.choose_template()
 
     def is_multi_arena(self):
-        card_types = self.typeline.split(" - ")
-        for type_text in card_types:
+        for type_text in self.type:
             is_space = type_text.capitalize().find("Space") != -1
             is_ground = type_text.capitalize().find("Ground") != -1
             is_character = type_text.capitalize().find("Character") != -1
