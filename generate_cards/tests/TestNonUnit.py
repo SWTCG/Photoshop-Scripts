@@ -192,6 +192,23 @@ class TestNonUnit(unittest.TestCase):
         operation_cinder.wrap_text()
         operation_cinder.write_psd()
 
+    def test_trait(self):
+        survival_instinct = NonUnit(
+            name="Survival Instinct",
+            typeline="Equipment - Space/Ground/Character - Trait",
+            expansion="BF",
+            side="N",
+            rarity="U",
+            image="BF054_Survival_Instinct.psd",
+            number="54",
+            cost="2",
+            game_text="When you prevent damage to one of your units, attach this Trait to that unit.\rEquipped unit "
+                      "gets Damage Control 2.\rEquipped unit with another Equipment attached also gets \"Bounty: "
+                      "Remove up to 2 damage counters from this unit.\""
+        )
+        survival_instinct.wrap_text()
+        survival_instinct.write_psd()
+
     def test_scaling(self):
         trained_in_the_arts = NonUnit(
             name="Trained in the Arts",
