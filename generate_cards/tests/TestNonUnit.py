@@ -86,6 +86,24 @@ class TestNonUnit(unittest.TestCase):
         sabotage.wrap_text()
         sabotage.write_psd()
 
+    def test_campaign(self):
+        operation_cinder = NonUnit(
+            name="Operation: Cinder",
+            typeline="Mission - Campaign",
+            expansion="BF",
+            side="D",
+            rarity="U",
+            image="BF046_Operation_Cinder.psd",
+            number="46",
+            cost="3",
+            game_text="When each turn starts, if your opponent has more units in the Ground arena than you do, you "
+                      "may take 1 20/1/1 Imperial Sentinel Messenger Subordinate with \"Upkeep: Gain 1 build point\" "
+                      "and put it into the Character arena. If you do, put 1 damage counter on one of your units in "
+                      "the Ground or Character arena."
+        )
+        operation_cinder.wrap_text()
+        operation_cinder.write_psd()
+
     def test_scaling(self):
         trained_in_the_arts = NonUnit(
             name="Trained in the Arts",
