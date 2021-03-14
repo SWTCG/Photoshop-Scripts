@@ -163,7 +163,7 @@ class SWTCGCard:
             if r == self.rarity:
                 layer_dict[SWTCGCard.RARITIES[r]].visible = True
             else:
-                if r in layer_dict.keys():
+                if SWTCGCard.RARITIES[r] in layer_dict.keys():
                     layer_dict[SWTCGCard.RARITIES[r]].visible = False
 
         # Show correct expansion symbol and hide the rest.
