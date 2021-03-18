@@ -14,12 +14,9 @@ class NonUnit(SWTCGCard):
                  cost=None, game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
         if cost == "":
             cost = None
-        if version == "":
-            version = None
         super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
         self.number = number
         self.cost = cost
-        self.version = version
 
     def wrap_text(self):
         text_limits = [
