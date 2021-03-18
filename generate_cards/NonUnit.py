@@ -12,9 +12,11 @@ from generate_cards.SWTCGCard import SWTCGCard
 class NonUnit(SWTCGCard):
     def __init__(self, name, typeline, expansion, side, rarity, number, image,
                  cost=None, game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
-        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
         if cost == "":
             cost = None
+        if version == "":
+            version = None
+        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
         self.number = number
         self.cost = cost
         self.version = version
