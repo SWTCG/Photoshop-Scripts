@@ -27,6 +27,13 @@ class SWTCGCard:
 
     def __init__(self, name, typeline, expansion, side, rarity, image,
                  game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
+        if game_text == "":
+            game_text = None
+        if flavor_text == "":
+            flavor_text = None
+        if version == "":
+            version = None
+
         self.name = name
         self.typeline = typeline
         self.expansion = expansion

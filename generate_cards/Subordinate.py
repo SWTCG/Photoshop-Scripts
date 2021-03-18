@@ -12,7 +12,7 @@ from generate_cards.SWTCGCard import SWTCGCard
 class Subordinate(SWTCGCard):
     def __init__(self, name, typeline, expansion, side, rarity, speed, power, health, image,
                  game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
-        if flavor_text is not None:
+        if flavor_text is not None or "":
             flavor_text = flavor_text.replace("<i>", "%temp%").replace("</i>", "<i>").replace("%temp%", "</i>")
             game_text = f"{game_text}\r<i>{flavor_text}</i>"
         super().__init__(name, typeline, expansion, side, rarity, image, game_text, None, version, icon, ppi)
