@@ -306,4 +306,5 @@ class SWTCGCard:
             app.activeDocument = document
             layer_dict[card_image.name].resize(resize_pct, resize_pct, ps.AnchorPosition.TopLeft)
         layer_dict["Gamma Correction"].visible = True
+        doc2.close(ps.DialogModes.DisplayErrorDialogs)
         return None
