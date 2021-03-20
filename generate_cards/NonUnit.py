@@ -10,11 +10,15 @@ from generate_cards.SWTCGCard import SWTCGCard
 
 
 class NonUnit(SWTCGCard):
+    IMAGE_WINDOW = array([115, 233, 2006, 1087])
+
     def __init__(self, name, typeline, expansion, side, rarity, number, image,
                  cost=None, game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
         if cost == "":
             cost = None
-        super().__init__(name, typeline, expansion, side, rarity, image, game_text, flavor_text, version, icon, ppi)
+        image_window = self.IMAGE_WINDOW * ppi / 600
+        super().__init__(name, typeline, expansion, side, rarity, image, image_window,
+                         game_text, flavor_text, version, icon, ppi)
         self.number = number
         self.cost = cost
 

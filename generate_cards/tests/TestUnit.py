@@ -132,3 +132,24 @@ class TestUnit(unittest.TestCase):
         )
         commander_iden_versio_a.wrap_text()
         commander_iden_versio_a.write_psd()
+
+    def test_photoshop_image2(self):
+        climate_disruption_array = Unit(
+            name="Climate Disruption Array",
+            typeline="Space - Imperial Fortification",
+            expansion="BF",
+            side="D",
+            rarity="R",
+            image="BF003_Climate_Disruption_Array.psd",
+            cost="4",
+            speed="20",
+            power="2",
+            health="5",
+            number="3",
+            game_text="[tap] -> One of your opponent's Locations loses its game text until end of turn. Play only "
+                      "during your build step.\rPay 2 Force -> Choose one: Disrupt a Space unit's activated ability. "
+                      "Or: Remove 1 counter from your opponent's Resource.",
+            flavor_text="\"The satellites are aligned.\" \u2014Imperial officer"
+        )
+        climate_disruption_array.wrap_text()
+        climate_disruption_array.write_psd()
