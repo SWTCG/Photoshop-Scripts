@@ -89,7 +89,7 @@ def clean_text(card_df):
         # Accent the e on Padmé
         .str.replace("Padme", "Padm\u00e9", regex=False)
         # Italicize words in parentheses
-        .str.replace(r"(\(.*\))", "<i>\\1</i>", regex=True)
+        .str.replace(r"(\([^(]+\))", "<i>\\1</i>", regex=True)
         # Replace instances of hyphen followed by a number with an en dash, e.g. -1
         .str.replace(r"(^| )-(\d+\b)", "\\1\u2013\\2", regex=True)
         # Separate abilities with a carriage return
