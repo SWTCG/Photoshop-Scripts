@@ -1,3 +1,5 @@
+import re
+
 from numpy import inf
 from PIL import ImageFont
 
@@ -10,6 +12,10 @@ class CardText:
     def __init__(self, text, font, font_size, scale=0.89, **kwargs):
         if text is not None:
             text = text.replace(" | ", "\r")
+            # Replace straight quotes with smart (curly) quotes.
+            # \u201c is the left curly double quotation mark (“)
+            # \u201d is the right curly double quotation mark (”)
+            text = re.sub(r"(\")([^\"]*)(\")", "\u201c\\2\u201d", text)
         self.text = text
         self.font = font
         self.font_size = font_size

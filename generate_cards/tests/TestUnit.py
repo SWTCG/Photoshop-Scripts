@@ -153,3 +153,25 @@ class TestUnit(unittest.TestCase):
         )
         climate_disruption_array.wrap_text()
         climate_disruption_array.write_psd()
+
+    def test_tap_quote(self):
+        emperor_palpatine_q = Unit(
+            name="Emperor Palpatine",
+            typeline="Character - Imperial Dark Jedi Master - Sith Lord",
+            expansion="BF",
+            side="D",
+            rarity="R",
+            image="BF012_Emperor_Palpatine_Q.psd",
+            cost="10",
+            speed="30",
+            power="7",
+            health="6",
+            number="12",
+            game_text="Forewarning: Gain 3 Force.\rWhen you deploy Palpatine or whenever he is attacked, you may pay "
+                      "3 Force. If you do, take 1 30/3/3 Imperial Royal Guards Subordinate with \"Armor\" and \"[tap] "
+                      "-> Protect 3\" and put it into the Ground or Character arena.\rPay 3 Force -> Deflect 2",
+            flavor_text="\"Your master has arrived.\"",
+            version="Q"
+        )
+        emperor_palpatine_q.wrap_text()
+        emperor_palpatine_q.write_psd()
