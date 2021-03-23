@@ -6,7 +6,7 @@ import yaml
 
 import generate_cards.symbols as symbols
 import generate_cards.util.photoshop as ps_util
-from generate_cards.CardText import CardText
+from generate_cards.CardText import CardText, psd_text
 from generate_cards.expansions import EXPANSIONS
 
 
@@ -122,7 +122,7 @@ class SWTCGCard:
     def _write_psd(self, document):
         layer_dict = ps_util.get_layers(document)
 
-        layer_dict["Card Name"].textItem.contents = self.name
+        layer_dict["Card Name"].textItem.contents = psd_text(self.name)
         layer_dict["Typeline"].textItem.contents = self.typeline
 
         if self.game_text.text is None or self.game_text.text == "":
@@ -188,7 +188,11 @@ class SWTCGCard:
         self.place_symbol(symbols.Arrow(self.ppi, self.game_text.font_size), layer_dict)
         self.place_symbol(symbols.Bullet(self.ppi, self.game_text.font_size), layer_dict)
 
-        # Italicize words in game and flavor text
+        # Italicize words in card name, game text, and flavor text
+        for i in zip(CardText.psd_text_positions(self.name, "<i>"),
+                     CardText.psd_text_positions(self.name, "</i>")):
+            ps_util.partial_text_format(layer_dict["Card Name"], i[0], i[1], faux_italic=True)
+
         for i in zip(CardText.psd_text_positions(self.game_text.text, "<i>"),
                      CardText.psd_text_positions(self.game_text.text, "</i>")):
             ps_util.partial_text_format(layer_dict["Game Text"], i[0], i[1], font="Dax-Italic")

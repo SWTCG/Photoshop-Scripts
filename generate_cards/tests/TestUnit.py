@@ -175,3 +175,24 @@ class TestUnit(unittest.TestCase):
         )
         emperor_palpatine_q.wrap_text()
         emperor_palpatine_q.write_psd()
+
+    def test_name_italics(self):
+        corvus_b = Unit(
+            name="<i>Corvus</i>",
+            typeline="Space - New Republic Capital Ship",
+            expansion="BF",
+            side="L",
+            rarity="R",
+            image="BF008_Corvus_B.psd",
+            cost="8",
+            speed="30",
+            power="5",
+            health="5",
+            number="8",
+            game_text="Damage Control 2\rInspiration\r<i>Corvus</i> gets +1 power and Ferocity when attacking a Dark "
+                      "Side unit.\rBombard 3",
+            flavor_text="After Iden Versio's defection to the Rebels, the <i>Corvus</i> serves the New Republic.",
+            version="B"
+        )
+        corvus_b.wrap_text()
+        corvus_b.write_psd()

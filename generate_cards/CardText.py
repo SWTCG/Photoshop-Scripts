@@ -87,20 +87,11 @@ class CardText:
 
     @staticmethod
     def psd_text_positions(string, substring):
-        text = CardText._psd_text(string.replace(substring, "\0")).replace("\0", substring)
+        text = psd_text(string.replace(substring, "\0")).replace("\0", substring)
         return CardText.text_positions(text, substring)
 
-    @staticmethod
-    def _psd_text(text):
-        syms = [s() for s in symbols.SYMBOLS]
-        for symbol in syms:
-            text = text.replace(symbol.string, symbol.replacement)
-        for formatter in CardText.FORMATTERS:
-            text = text.replace(formatter, "")
-        return text
-
     def psd_text(self):
-        return self._psd_text(self.text)
+        return psd_text(self.text)
 
     def wrap_text(self, ppi, line_lengths, inplace=False):
         lines = self.lines.copy()
@@ -144,3 +135,12 @@ class CardText:
             return None
         else:
             return new_text, new_lines
+
+
+def psd_text(text):
+    syms = [s() for s in symbols.SYMBOLS]
+    for symbol in syms:
+        text = text.replace(symbol.string, symbol.replacement)
+    for formatter in CardText.FORMATTERS:
+        text = text.replace(formatter, "")
+    return text
