@@ -21,8 +21,8 @@ def import_lackey_file(file_name):
 
     # Create properly named columns
     cards['version'] = cards['Name'].map(lambda x: x[x.rfind("(") + 1: -1] if x[-1] == ")" else "")
-    cards['name'] = cards['Name'].map(lambda x: x[:x.rfind("(")] if x[-1] == ")" else x)
-    cards['name'] = cards['name'].map(lambda x: x[:x.rfind("{")] if x[-1] == "}" else x)
+    cards['name'] = cards['Name'].map(lambda x: x[:x.rfind("(")].strip() if x[-1] == ")" else x)
+    cards['name'] = cards['name'].map(lambda x: x[:x.rfind("{")].strip() if x[-1] == "}" else x)
     cards.loc[~cards['Subtype'].isna(), 'typeline'] = cards['Type'] + " - " + cards['Subtype']
     cards.loc[cards['Subtype'].isna(), 'typeline'] = cards['Type']
     cards['image'] = cards['ImageFile'] + ".psd"
