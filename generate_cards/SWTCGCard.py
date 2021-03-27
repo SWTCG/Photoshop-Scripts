@@ -25,7 +25,7 @@ class SWTCGCard:
     SMALL_FONT_SIZE = 6.5  # In points
     # Could go as small as 6 pt to get 10 lines on a unit card. Darth Sidious (G) is precedent.
 
-    def __init__(self, name, typeline, expansion, side, rarity, image, image_window,
+    def __init__(self, name, typeline, expansion, side, rarity, image, card_object,
                  game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
         if game_text == "":
             game_text = None
@@ -40,7 +40,8 @@ class SWTCGCard:
         self.side = side
         self.rarity = rarity
         self.image = image
-        self.image_window = image_window
+        self.card_object = card_object
+        self.image_window = card_object.IMAGE_WINDOW * ppi / 600
         self.icon = icon
         self.ppi = ppi
 
@@ -124,6 +125,8 @@ class SWTCGCard:
 
         layer_dict["Card Name"].textItem.contents = psd_text(self.name)
         layer_dict["Typeline"].textItem.contents = self.typeline
+        self.fit_single_line_text(layer_dict["Card Name"], self.card_object.NAME_WIDTH * self.ppi / 600)
+        self.fit_single_line_text(layer_dict["Typeline"], self.card_object.TYPELINE_WIDTH * self.ppi / 600)
 
         if self.game_text.text is None or self.game_text.text == "":
             layer_dict["Game Text"].visible = False  # Hide Game Text layer
@@ -238,9 +241,35 @@ class SWTCGCard:
 
         return None
 
+    @staticmethod
+    def fit_single_line_text(text_layer, max_width):
+        layer_width = text_layer.bounds[2] - text_layer.bounds[0]
+        # Decrease horizontal scaling.
+        layer_scale = text_layer.textItem.horizontalScale
+        while layer_width > max_width and layer_scale > 100:
+            layer_scale -= 1
+            text_layer.textItem.horizontalScale = layer_scale
+            layer_width = text_layer.bounds[2] - text_layer.bounds[0]
+        # Decrease tracking (spacing between characters).
+        layer_tracking = text_layer.textItem.tracking
+        while layer_width > max_width and layer_tracking > 0:
+            layer_tracking -= 1
+            text_layer.textItem.tracking = layer_tracking
+            layer_width = text_layer.bounds[2] - text_layer.bounds[0]
+        # Decrease font size.
+        start_size = ps_util.fixed_font_size(text_layer)
+        layer_size = start_size
+        while layer_width > max_width and layer_size > start_size * 0.85:
+            layer_size -= 0.05
+            text_layer.textItem.size = layer_size
+            layer_width = text_layer.bounds[2] - text_layer.bounds[0]
+        if layer_width > max_width:
+            warnings.warn(f"Text in layer `{text_layer.name}` is too long.")
+        return None
+
     def place_symbol(self, symbol, layers):
         symbol_count = self.game_text.text.count(symbol.string)
-        psd_text = self.game_text.psd_text()
+        psd_content = self.game_text.psd_text()
         if symbol_count > 0:
             layers[symbol.layer_name].visible = True
             bounds = layers[symbol.layer_name].bounds
@@ -268,7 +297,7 @@ class SWTCGCard:
                 ps_util.move_layer_to(layers[layer_name], init_pos[0] + xy_pos[i][0], init_pos[1] + xy_pos[i][1])
 
                 space_width = self.game_text.text_width(" ", self.ppi, scale=1)
-                next_char = psd_text[text_pos[i] + 1] if text_pos[i] < len(psd_text) else ""
+                next_char = psd_content[text_pos[i] + 1] if text_pos[i] < len(psd_content) else ""
                 space_scale = (symbol.width + symbol.right_kern.get(next_char, 0)) / space_width
                 ps_util.partial_text_format(layers["Game Text"], text_pos[i], text_pos[i],
                                             horizontal_scale=space_scale * 100)
@@ -305,10 +334,11 @@ class SWTCGCard:
             layer_num += 1
             app.activeDocument = doc2
             layer_dict2[card_image.name].duplicate(layer_dict["Card Image"], ps.ElementPlacement.PlaceAtEnd)
+            app.activeDocument = document
+            document.activeLayer.name = card_image.name
             layer_dict = ps_util.get_layers(document)
             # Resize image to 99.2% of its original size to compensate for difference in card sizes.
             resize_pct = 99.2
-            app.activeDocument = document
             image_bounds = layer_dict[card_image.name].bounds
             x_pos, y_pos = image_bounds[0] * 0.01 * resize_pct, image_bounds[1] * 0.01 * resize_pct
             ps_util.move_layer_to(layer_dict[card_image.name], x_pos, y_pos)

@@ -196,3 +196,25 @@ class TestUnit(unittest.TestCase):
         )
         corvus_b.wrap_text()
         corvus_b.write_psd()
+
+    def test_long_typeline(self):
+        inferno_squad_b = Unit(
+            name="Inferno Squad",
+            typeline="Space/Ground - New Republic Soldier Squad - Squadron",
+            expansion="BF",
+            side="L",
+            rarity="R",
+            image="BF019_Inferno_Squad_B.psd",
+            cost="8",
+            speed="50",
+            power="6",
+            health="7",
+            number="19",
+            game_text="Switch: Shields 1/Focus 1, Precision\rReduced Cost 7: If you have a unit in the Character "
+                      "arena. <i>(Inferno Squad's build cost is 7 if the listed condition is met.)</i>\rResilience 2",
+            flavor_text="\"We've been fighting our whole lives. It's taken us too long to realize that we were "
+                        "fighting for the wrong side. . . .\" \u2014Commander Iden Versio",
+            version="B"
+        )
+        inferno_squad_b.wrap_text()
+        inferno_squad_b.write_psd()
