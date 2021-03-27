@@ -11,8 +11,8 @@ from generate_cards.SWTCGCard import SWTCGCard
 
 class Subordinate(SWTCGCard):
     IMAGE_WINDOW = array([93, 109, 1394, 1539])
-    NAME_WIDTH = 1145
-    TYPELINE_WIDTH = 1240
+    NAME_WIDTH = 1140
+    TYPELINE_WIDTH = 1235
 
     def __init__(self, name, typeline, expansion, side, rarity, speed, power, health, image,
                  game_text=None, flavor_text=None, version=None, icon=True, ppi=600):
