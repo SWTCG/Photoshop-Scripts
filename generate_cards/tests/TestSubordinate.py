@@ -11,7 +11,7 @@ class TestUnit(unittest.TestCase):
             expansion="BF",
             side="D",
             rarity="S",
-            image=None,
+            image="BFsub_Imperial_Sentinel_Messenger.psd",
             speed="20",
             power="1",
             health="1",

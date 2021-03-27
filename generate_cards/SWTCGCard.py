@@ -335,8 +335,14 @@ class SWTCGCard:
         layer_dict2 = ps_util.get_layers(doc2)
 
         # Grab all of the images under Card Image
+        if "Card Image" not in layer_dict2.keys():
+            warnings.warn(f"{self.name} has no `Card Image` group")
+            doc2.close(ps.DialogModes.DisplayErrorDialogs)
+            app.activeDocument = document
+            return None
+
         if len([layer for layer in layer_dict2["Card Image"].layers]) == 0:
-            warnings.warn(f"{self.name}: No layers in Card Image group.")
+            warnings.warn(f"{self.name}: No layers in `Card Image` group.")
             doc2.close(ps.DialogModes.DisplayErrorDialogs)
             app.activeDocument = document
             return None
