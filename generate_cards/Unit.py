@@ -25,12 +25,20 @@ class Unit(SWTCGCard):
         self.number = number
 
     def wrap_text(self):
+        if not self.version:
+            pixel_limits_default = array([1025, 1050, 1075, 1088, 1088, 1075, 1055, 1025])
+            pixel_limits_small = array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040])
+        elif len(self.version) == 1:
+            pixel_limits_default = array([1025, 1050, 1075, 1088, 1088, 1075, 1050, 1025])
+            pixel_limits_small = array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1045, 1040])
+        else:
+            pixel_limits_default = array([1025, 1050, 1075, 1088, 1088, 1075, 1025, 1025])
+            pixel_limits_small = array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1025, 1040])
         text_limits = [
-            TextSpaceLimit(7, 0.89, array([1025, 1050, 1075, 1088, 1088, 1075, 1050, 1025]) * self.ppi / 600),
-            TextSpaceLimit(6.5, 0.89, array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040]) * self.ppi / 600)
+            TextSpaceLimit(7, 0.89, pixel_limits_default * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, pixel_limits_small * self.ppi / 600)
         ]
-        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1029, 1050, 1072, 1083, 1093, 1083, 1072, 1050, 1040])
-                                       * self.ppi / 600)
+        text_limits += [TextSpaceLimit(6.5, scale / 100, pixel_limits_small * self.ppi / 600)
                         for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None

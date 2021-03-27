@@ -26,12 +26,21 @@ class Subordinate(SWTCGCard):
         self.health = health
 
     def wrap_text(self):
+        if not self.version:
+            pixel_limits_2lines = array([1220, 1155])
+            pixel_limits_3lines = array([1270, 1220, 1150])
+        elif len(self.version) == 1:
+            pixel_limits_2lines = array([1200, 1155])
+            pixel_limits_3lines = array([1270, 1200, 1150])
+        else:
+            pixel_limits_2lines = array([1150, 1150])
+            pixel_limits_3lines = array([1270, 1150, 1150])
         text_limits = [
-            TextSpaceLimit(7, 0.89, array([1200, 1155]) * self.ppi / 600),
-            TextSpaceLimit(6.5, 0.89, array([1200, 1155]) * self.ppi / 600),
-            TextSpaceLimit(6.5, 0.89, array([1270, 1220, 1150]) * self.ppi / 600)
+            TextSpaceLimit(7, 0.89, pixel_limits_2lines * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, pixel_limits_2lines * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, pixel_limits_3lines * self.ppi / 600)
         ]
-        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1270, 1220, 1150]) * self.ppi / 600)
+        text_limits += [TextSpaceLimit(6.5, scale / 100, pixel_limits_3lines * self.ppi / 600)
                         for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None

@@ -218,3 +218,24 @@ class TestUnit(unittest.TestCase):
         )
         inferno_squad_b.wrap_text()
         inferno_squad_b.write_psd()
+
+    def test_version_oval(self):
+        darth_vader_e2 = Unit(
+            name="Darth Vader",
+            typeline="Character - Imperial Dark Jedi Knight - Sith Lord",
+            expansion="BF",
+            side="D",
+            rarity="R",
+            image="BF010_Darth_Vader_E2.psd",
+            cost="10",
+            speed="50",
+            power="6",
+            health="6",
+            number="10",
+            game_text="Armor\rEach of your Subordinates gets Critical Hit 1.\rPay 1 Force -> Deflect 1\rPay 1 Force -> "
+                      "Protect 1\rINSERT: Pay 3 build points -> Take 1 Stormtrooper Subordinate with printed power 4 "
+                      "or less and put it into its arena. Play only during your build step.",
+            version="E2"
+        )
+        darth_vader_e2.wrap_text()
+        darth_vader_e2.write_psd()

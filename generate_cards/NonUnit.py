@@ -24,11 +24,20 @@ class NonUnit(SWTCGCard):
         self.cost = cost
 
     def wrap_text(self):
+        if not self.version:
+            pixel_limits_default = array([1661, 1675, 1685, 1675, 1650])
+            pixel_limits_small = array([1661, 1680, 1690, 1680, 1660])
+        elif len(self.version) == 1:
+            pixel_limits_default = array([1661, 1675, 1685, 1650, 1650])
+            pixel_limits_small = array([1661, 1680, 1690, 1680, 1655])
+        else:
+            pixel_limits_default = array([1661, 1675, 1685, 1630, 1630])
+            pixel_limits_small = array([1661, 1680, 1690, 1645, 1635])
         text_limits = [
-            TextSpaceLimit(7, 0.89, array([1661, 1675, 1685, 1675, 1650]) * self.ppi / 600),
-            TextSpaceLimit(6.5, 0.89, array([1661, 1680, 1690, 1680, 1660]) * self.ppi / 600)
+            TextSpaceLimit(7, 0.89, pixel_limits_default * self.ppi / 600),
+            TextSpaceLimit(6.5, 0.89, pixel_limits_small * self.ppi / 600)
         ]
-        text_limits += [TextSpaceLimit(6.5, scale / 100, array([1661, 1680, 1690, 1680, 1660]) * self.ppi / 600)
+        text_limits += [TextSpaceLimit(6.5, scale / 100, pixel_limits_small * self.ppi / 600)
                         for scale in range(88, 74, -1)]
         self._wrap_text(text_limits)
         return None

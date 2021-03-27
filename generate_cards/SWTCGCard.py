@@ -161,6 +161,12 @@ class SWTCGCard:
         else:
             layer_dict["Unique"].visible = True
             layer_dict["Version Letter"].textItem.contents = self.version
+            if len(self.version) == 1:
+                layer_dict["Unique Circle"].visible = True
+                layer_dict["Unique Oval"].visible = False
+            else:
+                layer_dict["Unique Circle"].visible = False
+                layer_dict["Unique Oval"].visible = True
 
         # Show correct side layer and hide the rest.
         for s in SWTCGCard.SIDES:
