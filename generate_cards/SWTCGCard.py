@@ -329,6 +329,12 @@ class SWTCGCard:
         layer_dict2 = ps_util.get_layers(doc2)
 
         # Grab all of the images under Card Image
+        if len([layer for layer in layer_dict2["Card Image"].layers]) == 0:
+            warnings.warn(f"{self.name}: No layers in Card Image group.")
+            doc2.close(ps.DialogModes.DisplayErrorDialogs)
+            app.activeDocument = document
+            return None
+
         layer_num = 0
         for card_image in layer_dict2["Card Image"].layers:
             layer_num += 1
