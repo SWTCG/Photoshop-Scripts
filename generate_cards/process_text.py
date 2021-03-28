@@ -11,7 +11,7 @@ from Unit import Unit
 
 
 def import_lackey_file(file_name):
-    file_path = os.path.join(CONFIG['card_data_dir'], file_name)
+    file_path = os.path.join(CONFIG['directories']['card_data'], file_name)
     cards = pd.read_csv(file_path, sep='\t', encoding='utf-8', usecols=list(range(15)), dtype=str)
 
     # Create unique index

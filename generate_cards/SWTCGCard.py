@@ -1,24 +1,23 @@
 import os
+import re
 import warnings
-from comtypes import  COMError
+from comtypes import COMError
+from pathlib import Path
 
 import photoshop.api as ps
-import yaml
 
 import generate_cards.symbols as symbols
 import generate_cards.util.photoshop as ps_util
 from generate_cards.CardText import CardText, psd_text
 from generate_cards.expansions import EXPANSIONS
+from generate_cards.read_config import CONFIG
 
 
 class SWTCGCard:
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(dir_path, 'config.yaml'), 'r') as yaml_file:
-        config = yaml.safe_load(yaml_file)
-    DAX_REG = config['fonts']['Dax']['Regular']
-    DAX_ITAL = config['fonts']['Dax']['Italic']
-    TEMPLATE_DIR = config['template_dir']
-    IMAGE_DIR = config['image_dir']
+    DAX_REG = CONFIG['fonts']['Dax']['Regular']
+    DAX_ITAL = CONFIG['fonts']['Dax']['Italic']
+    TEMPLATE_DIR = CONFIG['directories']['templates']
+    IMAGE_DIR = CONFIG['directories']['images']
 
     SIDES = {"D": "Dark", "L": "Light", "N": "Neutral"}
     RARITIES = {"R": "Rare", "U": "Uncommon", "C": "Common", "P": "Promo", "S": "Subordinate"}
@@ -242,12 +241,6 @@ class SWTCGCard:
         else:
             pass
 
-        # Text should probably be cleaned for proper bullet point characters, é characters, en dashes in front of
-        # numbers, etc. before getting to this function.
-
-        # Save PSD
-        # Export as PNG
-
         return None
 
     @staticmethod
@@ -392,4 +385,47 @@ class SWTCGCard:
                     layer_dict[card_image.name].translate(x_shift, y_shift)
         layer_dict["Gamma Correction"].visible = True
         doc2.close(ps.DialogModes.DisplayErrorDialogs)
+        return None
+
+    def get_file_name(self):
+        if self.rarity == "S":
+            number = "sub"
+        elif self.rarity == "P":
+            number = "promo"
+        else:
+            number = self.number.zfill(3)
+        clean_name = re.sub(r"[^0-9a-zA-Z]+", " ", self.name).strip().replace(" ", "_")
+        file_name = self.expansion + number + "_" + clean_name
+        if self.version:
+            file_name = file_name + "_" + self.version
+        return file_name
+
+    def save_and_close(self, doc, save, export, auto_close, auto_quit):
+        app = ps.Application
+
+        file_name = self.get_file_name()
+        if save:
+            if save is True:
+                save_name = os.path.join(CONFIG['directories']['save'], file_name + ".psd")
+            elif os.path.isabs(save):
+                save_name = save
+            else:
+                save_name = os.path.join(os.getcwd(), save)
+            options = ps.PhotoshopSaveOptions()
+            Path(save_name).parent.mkdir(parents=True, exist_ok=True)
+            doc.saveAs(save_name, options)
+        if export:
+            if export is True:
+                export_name = os.path.join(CONFIG['directories']['export'], file_name + ".png")
+            elif os.path.isabs(export):
+                export_name = export
+            else:
+                export_name = os.path.join(os.getcwd(), export)
+            options = ps.PNGSaveOptions()
+            Path(export_name).parent.mkdir(parents=True, exist_ok=True)
+            doc.saveAs(export_name, options, True)
+        if auto_close:
+            doc.close(ps.DialogModes.DisplayErrorDialogs)  # Close file without saving
+        if auto_quit:
+            app.quit()  # Exit Photoshop
         return None

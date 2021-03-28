@@ -5,6 +5,7 @@ from numpy import array
 
 import generate_cards.util.photoshop
 from generate_cards.expansions import EXPANSIONS
+from generate_cards.read_config import CONFIG
 from generate_cards.TextSpaceLimit import TextSpaceLimit
 from generate_cards.SWTCGCard import SWTCGCard
 
@@ -43,7 +44,7 @@ class Unit(SWTCGCard):
         self._wrap_text(text_limits)
         return None
 
-    def write_psd(self, auto_close=False, auto_quit=False):
+    def write_psd(self, save=None, export=None, auto_close=False, auto_quit=False):
         cards_in_set = EXPANSIONS[self.expansion].size
 
         app = ps.Application()
@@ -60,8 +61,5 @@ class Unit(SWTCGCard):
         if self.number is not None:  # Promo cards may not have a number
             layer_dict["Number"].textItem.contents = "{}/{}".format(self.number, cards_in_set)
 
-        if auto_close:
-            doc.close(ps.DialogModes.DisplayErrorDialogs)  # Close file without saving
-        if auto_quit:
-            app.quit()  # Exit Photoshop
+        self.save_and_close(doc, save, export, auto_close, auto_quit)
         return None

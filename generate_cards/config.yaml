@@ -1,5 +1,9 @@
-template_dir: D:\Matt\Games\Star Wars TCG\Hi-Res Cards\Templates\test
-image_dir: D:\Matt\Games\Star Wars TCG\IDC\Old Expansion Files\Battlefront
+directories:
+  templates: D:\Matt\Games\Star Wars TCG\Hi-Res Cards\Templates\test
+  images: D:\Matt\Games\Star Wars TCG\IDC\Old Expansion Files\Battlefront
+  card_data: D:\Matt\Games\Star Wars TCG\Code\SWTCG-LACKEY\starwars\sets
+  save: D:\Matt\Games\Star Wars TCG\Hi-Res Cards\41 Battlefront\Photoshop
+  export: D:\Matt\Games\Star Wars TCG\Hi-Res Cards\41 Battlefront
 
 fonts:
   Dax:

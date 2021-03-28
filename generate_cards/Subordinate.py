@@ -45,7 +45,7 @@ class Subordinate(SWTCGCard):
         self._wrap_text(text_limits)
         return None
 
-    def write_psd(self, auto_close=False, auto_quit=False):
+    def write_psd(self, save=None, export=None, auto_close=False, auto_quit=False):
         app = ps.Application()
         app.load(os.path.join(SWTCGCard.TEMPLATE_DIR, self.template))
         doc = app.activeDocument(self.template)
@@ -63,8 +63,5 @@ class Subordinate(SWTCGCard):
         layer_dict["Power"].textItem.contents = self.power
         layer_dict["Health"].textItem.contents = self.health
 
-        if auto_close:
-            doc.close(ps.DialogModes.DisplayErrorDialogs)  # Close file without saving
-        if auto_quit:
-            app.quit()  # Exit Photoshop
+        self.save_and_close(doc, save, export, auto_close, auto_quit)
         return None
