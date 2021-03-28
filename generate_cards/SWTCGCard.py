@@ -204,11 +204,13 @@ class SWTCGCard:
 
         for i in zip(CardText.psd_text_positions(self.game_text.text, "<i>"),
                      CardText.psd_text_positions(self.game_text.text, "</i>")):
-            ps_util.partial_text_format(layer_dict["Game Text"], i[0], i[1], font="Dax-Italic")
+            ps_util.partial_text_format(layer_dict["Game Text"], i[0], i[1], font="Dax-Italic",
+                                        horizontal_scale=self.game_text.scale * 100)
 
         for i in zip(CardText.psd_text_positions(self.flavor_text.text, "<i>"),
                      CardText.psd_text_positions(self.flavor_text.text, "</i>")):
-            ps_util.partial_text_format(layer_dict["Flavour Text"], i[0], i[1], font="Dax-Regular")
+            ps_util.partial_text_format(layer_dict["Flavour Text"], i[0], i[1], font="Dax-Regular",
+                                        horizontal_scale=self.flavor_text.scale * 100)
 
         # Insert release year into copyright.
         self.copyright(layer_dict)
