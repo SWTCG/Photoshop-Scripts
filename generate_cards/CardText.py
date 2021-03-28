@@ -88,7 +88,10 @@ class CardText:
     @staticmethod
     def psd_text_positions(string, substring):
         text = psd_text(string.replace(substring, "\0")).replace("\0", substring)
-        return CardText.text_positions(text, substring)
+        if substring in CardText.FORMATTERS:
+            return [pos - occurrence for occurrence, pos in enumerate(CardText.text_positions(text, substring))]
+        else:
+            return CardText.text_positions(text, substring)
 
     def psd_text(self):
         return psd_text(self.text)
