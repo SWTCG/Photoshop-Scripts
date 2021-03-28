@@ -392,8 +392,10 @@ class SWTCGCard:
             number = "sub"
         elif self.rarity == "P":
             number = "promo"
-        else:
+        elif hasattr(self, 'number'):
             number = self.number.zfill(3)
+        else:
+            number = ""
         clean_name = re.sub(r"[^0-9a-zA-Z]+", " ", self.name).strip().replace(" ", "_")
         file_name = self.expansion + number + "_" + clean_name
         if self.version:
