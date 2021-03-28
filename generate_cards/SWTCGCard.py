@@ -337,7 +337,7 @@ class SWTCGCard:
         try:
             app.load(file_path)
         except COMError:
-            warnings.warn(f"{file_path} does not exist.")
+            warnings.warn(f"Can't open {file_path}. Does it exist?")
             return None
 
         doc2 = app.activeDocument(self.image)
