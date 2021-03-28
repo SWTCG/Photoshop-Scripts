@@ -3,6 +3,25 @@ from math import sqrt
 import photoshop.api as ps
 from photoshop.api.action_list import ActionList
 
+ADJUSTMENT_LAYERS = [
+    ps.LayerKind.BrightnessContrastLayer,
+    ps.LayerKind.LevelsLayer,
+    ps.LayerKind.CurvesLayer,
+    ps.LayerKind.ExposureLayer,
+    ps.LayerKind.Vibrance,
+    ps.LayerKind.HueSaturationLayer,
+    ps.LayerKind.ColorBalanceLayer,
+    ps.LayerKind.BlackAndWhiteLayer,
+    ps.LayerKind.PhotoFilterLayer,
+    ps.LayerKind.ChannelMixerLayer,
+    ps.LayerKind.ColorLookup,
+    ps.LayerKind.InversionLayer,
+    ps.LayerKind.PosterizeLayer,
+    ps.LayerKind.ThresholdLayer,
+    ps.LayerKind.SelectiveColorLayer,
+    ps.LayerKind.GradientMapLayer
+]
+
 
 def get_layers(document, layers=None):
     """

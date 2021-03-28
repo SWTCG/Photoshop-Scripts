@@ -364,31 +364,32 @@ class SWTCGCard:
             app.activeDocument = document
             document.activeLayer.name = card_image.name
             layer_dict = ps_util.get_layers(document)
-            # Resize image to 99.2% of its original size to compensate for difference in card sizes.
-            resize_pct = 99.2
-            image_bounds = layer_dict[card_image.name].bounds
-            x_pos, y_pos = image_bounds[0] * 0.01 * resize_pct, image_bounds[1] * 0.01 * resize_pct
-            ps_util.move_layer_to(layer_dict[card_image.name], x_pos, y_pos)
-            layer_dict[card_image.name].resize(resize_pct, resize_pct, ps.AnchorPosition.TopLeft)
+            if layer_dict[card_image.name].kind not in ps_util.ADJUSTMENT_LAYERS:
+                # Resize image to 99.2% of its original size to compensate for difference in card sizes.
+                resize_pct = 99.2
+                image_bounds = layer_dict[card_image.name].bounds
+                x_pos, y_pos = image_bounds[0] * 0.01 * resize_pct, image_bounds[1] * 0.01 * resize_pct
+                ps_util.move_layer_to(layer_dict[card_image.name], x_pos, y_pos)
+                layer_dict[card_image.name].resize(resize_pct, resize_pct, ps.AnchorPosition.TopLeft)
 
-            # Make sure card image fills the entire image window and reposition if necessary.
-            image_width = layer_dict[card_image.name].bounds[2] - layer_dict[card_image.name].bounds[0]
-            image_height = layer_dict[card_image.name].bounds[3] - layer_dict[card_image.name].bounds[1]
-            if image_width < (self.image_window[2] - self.image_window[0]) \
-                    or image_height < (self.image_window[3] - self.image_window[1]):
-                warnings.warn(f"{self.name} card image is smaller than the image window.")
-            else:
-                x_shift = 0
-                y_shift = 0
-                if layer_dict[card_image.name].bounds[0] > self.image_window[0]:
-                    x_shift = self.image_window[0] - layer_dict[card_image.name].bounds[0]
-                if layer_dict[card_image.name].bounds[1] > self.image_window[1]:
-                    y_shift = self.image_window[1] - layer_dict[card_image.name].bounds[1]
-                if layer_dict[card_image.name].bounds[2] < self.image_window[2]:
-                    x_shift = self.image_window[2] - layer_dict[card_image.name].bounds[2]
-                if layer_dict[card_image.name].bounds[3] < self.image_window[3]:
-                    y_shift = self.image_window[1] - layer_dict[card_image.name].bounds[1]
-                layer_dict[card_image.name].translate(x_shift, y_shift)
+                # Make sure card image fills the entire image window and reposition if necessary.
+                image_width = layer_dict[card_image.name].bounds[2] - layer_dict[card_image.name].bounds[0]
+                image_height = layer_dict[card_image.name].bounds[3] - layer_dict[card_image.name].bounds[1]
+                if image_width < (self.image_window[2] - self.image_window[0]) \
+                        or image_height < (self.image_window[3] - self.image_window[1]):
+                    warnings.warn(f"{self.name} card image is smaller than the image window.")
+                else:
+                    x_shift = 0
+                    y_shift = 0
+                    if layer_dict[card_image.name].bounds[0] > self.image_window[0]:
+                        x_shift = self.image_window[0] - layer_dict[card_image.name].bounds[0]
+                    if layer_dict[card_image.name].bounds[1] > self.image_window[1]:
+                        y_shift = self.image_window[1] - layer_dict[card_image.name].bounds[1]
+                    if layer_dict[card_image.name].bounds[2] < self.image_window[2]:
+                        x_shift = self.image_window[2] - layer_dict[card_image.name].bounds[2]
+                    if layer_dict[card_image.name].bounds[3] < self.image_window[3]:
+                        y_shift = self.image_window[1] - layer_dict[card_image.name].bounds[1]
+                    layer_dict[card_image.name].translate(x_shift, y_shift)
         layer_dict["Gamma Correction"].visible = True
         doc2.close(ps.DialogModes.DisplayErrorDialogs)
         return None
