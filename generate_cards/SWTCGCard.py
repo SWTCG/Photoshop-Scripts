@@ -1,5 +1,6 @@
 import os
 import warnings
+from comtypes import  COMError
 
 import photoshop.api as ps
 import yaml
@@ -332,7 +333,13 @@ class SWTCGCard:
 
     def place_image(self, document, layer_dict):
         app = ps.Application()
-        app.load(os.path.join(self.IMAGE_DIR, self.image))
+        file_path = os.path.join(self.IMAGE_DIR, self.image)
+        try:
+            app.load(file_path)
+        except COMError:
+            warnings.warn(f"{file_path} does not exist.")
+            return None
+
         doc2 = app.activeDocument(self.image)
         layer_dict2 = ps_util.get_layers(doc2)
 
