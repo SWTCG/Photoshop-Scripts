@@ -396,7 +396,10 @@ class SWTCGCard:
             number = self.number.zfill(3)
         else:
             number = ""
-        clean_name = re.sub(r"[^0-9a-zA-Z]+", " ", self.name).strip().replace(" ", "_")
+        clean_name = self.name
+        for f in CardText.FORMATTERS:
+            clean_name = clean_name.replace(f, "")
+        clean_name = re.sub(r"[^0-9a-zA-Z-]+", " ", clean_name).strip().replace(" ", "_")
         file_name = self.expansion + number + "_" + clean_name
         if self.version:
             file_name = file_name + "_" + self.version
