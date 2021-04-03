@@ -1,11 +1,11 @@
 import os
+import warnings
 
 import photoshop.api as ps
 from numpy import array
 
-import generate_cards.util.photoshop
+import generate_cards.util.photoshop as ps_util
 from generate_cards.expansions import EXPANSIONS
-from generate_cards.read_config import CONFIG
 from generate_cards.TextSpaceLimit import TextSpaceLimit
 from generate_cards.SWTCGCard import SWTCGCard
 
@@ -50,9 +50,19 @@ class Unit(SWTCGCard):
         app = ps.Application()
         app.load(os.path.join(SWTCGCard.TEMPLATE_DIR, self.template))
         doc = app.activeDocument(self.template)
-        self._write_psd(doc)
 
-        layer_dict = generate_cards.util.photoshop.get_layers(doc)
+        with warnings.catch_warnings(record=True) as warning_list:
+            warnings.simplefilter('always')
+            self._write_psd(doc)
+        if len(warning_list) > 0:
+            for w in warning_list:
+                warnings.showwarning(w.message, w.category, w.filename, w.lineno, w.file, w.line)
+            if export:
+                export = False
+                warnings.warn(f"{self.expansion}{self.number} {self.name} was not exported due to errors that"
+                              f" occurred during the generating process.")
+
+        layer_dict = ps_util.get_layers(doc)
 
         layer_dict["Build"].textItem.contents = self.cost
         layer_dict["Speed"].textItem.contents = self.speed
@@ -61,5 +71,11 @@ class Unit(SWTCGCard):
         if self.number is not None:  # Promo cards may not have a number
             layer_dict["Number"].textItem.contents = "{}/{}".format(self.number, cards_in_set)
 
+        image_count = len([x for x in layer_dict["Card Image"].layers if x.kind not in ps_util.ADJUSTMENT_LAYERS])
+        if image_count > 1 and export:
+            export = False
+            warnings.warn(f"{self.expansion}{self.number} {self.name} was not exported due to "
+                          f"multiple image layers in `Card Image`")
+
         self.save_and_close(doc, save, export, auto_close, auto_quit)
-        return None
+        return len(warning_list)

@@ -19,7 +19,7 @@ class TestUnit(unittest.TestCase):
             flavor_text="\"Operation: Cinder is to begin at once.\""
         )
         imperial_sentinel_messenger.wrap_text()
-        imperial_sentinel_messenger.write_psd()
+        imperial_sentinel_messenger.write_psd(save=False, export=True)
 
     def test_unique(self):
         dio_b = Subordinate(

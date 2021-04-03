@@ -1,10 +1,10 @@
 import os
-from collections import OrderedDict
+import warnings
 
 import photoshop.api as ps
 from numpy import array
 
-import generate_cards.util.photoshop
+import generate_cards.util.photoshop as ps_util
 from generate_cards.TextSpaceLimit import TextSpaceLimit
 from generate_cards.SWTCGCard import SWTCGCard
 
@@ -49,9 +49,19 @@ class Subordinate(SWTCGCard):
         app = ps.Application()
         app.load(os.path.join(SWTCGCard.TEMPLATE_DIR, self.template))
         doc = app.activeDocument(self.template)
-        self._write_psd(doc)
 
-        layer_dict = generate_cards.util.photoshop.get_layers(doc)
+        with warnings.catch_warnings(record=True) as warning_list:
+            warnings.simplefilter('always')
+            self._write_psd(doc)
+        if len(warning_list) > 0:
+            for w in warning_list:
+                warnings.showwarning(w.message, w.category, w.filename, w.lineno, w.file, w.line)
+            if export:
+                export = False
+                warnings.warn(f"{self.expansion}sub {self.name} was not exported due to errors that occurred during"
+                              f" the generating process.")
+
+        layer_dict = ps_util.get_layers(doc)
 
         if len(self.game_text.lines) > 2:
             y = 1813 * self.ppi / 600 - layer_dict["Game Text"].textItem.position[1]
@@ -63,5 +73,11 @@ class Subordinate(SWTCGCard):
         layer_dict["Power"].textItem.contents = self.power
         layer_dict["Health"].textItem.contents = self.health
 
+        image_count = len([x for x in layer_dict["Card Image"].layers if x.kind not in ps_util.ADJUSTMENT_LAYERS])
+        if image_count > 1 and export:
+            export = False
+            warnings.warn(f"{self.expansion}sub {self.name} was not exported due to "
+                          f"multiple image layers in `Card Image`")
+
         self.save_and_close(doc, save, export, auto_close, auto_quit)
-        return None
+        return len(warning_list)
