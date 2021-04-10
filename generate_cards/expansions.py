@@ -57,5 +57,7 @@ EXPANSIONS = OrderedDict({
     'TUF': Expansion(size=120, year=2019, layer="43 The New Jedi Order: The Unifying Force"),
     'BOC': Expansion(size=150, year=2020, layer="44 Battle of Crait"),
     'SOLO': Expansion(size=180, year=2020, layer="45 Solo"),
-    'KAE': Expansion(size=180, year=2020, layer="46 The Old Republic: Knights and Exiles")
+    'KAE': Expansion(size=180, year=2020, layer="46 The Old Republic: Knights and Exiles"),
+    # The Mandalorian was released on April 10, 2021 despite the 2020 copyright on the original cards.
+    'TM': Expansion(size=240, year=2021, layer="47 The Mandalorian")
 })
